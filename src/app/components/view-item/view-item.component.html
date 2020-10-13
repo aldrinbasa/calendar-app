@@ -1,0 +1,28 @@
+<div (mouseover)="AssignValues(date, time, category, patient, reason)">
+  <div>
+    <label for="date">Date</label>
+    <input #date type="date" id="date" readonly>
+
+    <br>
+
+    <label for="time">Time</label>
+    <input #time type="time" id="time" readonly>
+
+    <br>
+
+    <label for="category">Category</label>
+    <input #category type="text" id="category" readonly>
+  </div>
+  <div [hidden]="hiddenAppointment">
+    <label for="details">Details</label>
+    <input  type="text" id="details">
+  </div>
+
+  <div [hidden]="hiddenOthers">
+    <label for="patient">Patient</label>
+    <input #patient type="text" id="patient" readonly>
+    <br>
+    <label for="reason">Reason</label>
+    <input #reason type="text" id="reason" readonly>
+  </div>
+</div>

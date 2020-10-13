@@ -1,0 +1,107 @@
+<div #addItemModal class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+
+        <input (click)="getModeOfForm(radioOneDay)" #radioOneDay type="radio" id="one-day" name="add-item-mode" value="one-day" checked="true">
+        <label for="one-day">One-Day</label>
+
+        <input (click)="getModeOfForm(radioMultiDay)" #radioMultiDay type="radio" id="multi-day" name="add-item-mode" value="multi-day">
+        <label for="multi-day">Multi-Day</label>
+
+        <br>
+
+
+        <div [hidden] = "hiddenOneDay">
+            <label for="date">Date</label>
+            <input #date type="date" id="date">
+            <br>
+            <label for="time">Time</label>
+            <input #time type="time" id="time">
+        </div>
+
+        <div [hidden]="hiddenMultiDay">
+            <label for="dateFrom">From</label>
+            <input #from type="date" id="dateFrom">
+            <br>
+            <label for="dateTo">To</label>
+            <input #to type="date" id="dateTo">
+        </div>
+
+        <br>
+
+        <label for="category">Category</label>
+        <select (click)="getCategoryOfForm(category)" #category name="category" id="category">
+          <option disabled selected value>-- select a category --</option>
+          <option value="appointment">Appointment</option>
+          <option value="personal">Personal</option>
+          <option value="sponsored-event">Sponsored Event</option>
+        </select>
+
+        <div [hidden]="hiddenAppointment">
+          <label for="details">Details</label>
+          <input #details type="text" id="details">
+        </div>
+
+        <div [hidden]="hiddenOthers">
+          <label for="patient">Patient</label>
+          <input #patient type="text" id="patient">
+          <br>
+          <label for="reason">Reason</label>
+          <input #reason type="text" id="reason">
+        </div>
+
+        <br>
+      </div>
+
+      <div class="modal-footer">
+        <button id="cancelButton" (click)="closeModal()">Cancel</button>
+        <button id="saveButton" (click)="getFormValues(
+          date, 
+          time, 
+          category,
+          from,
+          to,
+          patient,
+          reason,
+          details
+          )">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <button (click)="showModal=true" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+
+  <!-- <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button (click)="showModal=false" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div> -->
