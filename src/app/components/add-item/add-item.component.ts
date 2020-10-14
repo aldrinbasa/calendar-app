@@ -79,17 +79,25 @@ export class AddItemComponent implements OnInit {
     this.closeModal();
   }
 
+  hiddenAppointmentMultiDay;
+
   getModeOfForm(item){
+    
+    this.category.nativeElement.selectedIndex = 0;
+    this.hiddenAppointment = true;
+    this.hiddenOthers = true;
     
     if (item.id == "one-day"){
       this.oneDayMode = true;
       this.hiddenOneDay = false;
       this.hiddenMultiDay = true;
+      this.hiddenAppointmentMultiDay = false;
     }
     else if(item.id == "multi-day"){
       this.oneDayMode = false;
       this.hiddenOneDay = true;
       this.hiddenMultiDay = false;
+      this.hiddenAppointmentMultiDay = true;
     }
   }
 

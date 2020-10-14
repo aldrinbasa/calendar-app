@@ -43,7 +43,7 @@
         <label for="category">Category</label>
         <select (click)="getCategoryOfForm(category)" #category name="category" id="category">
           <option disabled selected value>-- select a category --</option>
-          <option value="appointment">Appointment</option>
+          <option #appointment [hidden]="hiddenAppointmentMultiDay" value="appointment">Appointment</option>
           <option value="personal">Personal</option>
           <option value="sponsored-event">Sponsored Event</option>
         </select>

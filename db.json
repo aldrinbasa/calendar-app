@@ -1,0 +1,84 @@
+{
+  "CalendarEventsTable": [
+    {
+      "id": 1,
+      "dateFrom": "2020-10-10",
+      "dateTo": "2020-10-15",
+      "time": "",
+      "category": "personal",
+      "details": "play valorant",
+      "createdBy": "",
+      "status": ""
+    },
+    {
+      "id": 2,
+      "dateFrom": "2020-10-20",
+      "dateTo": "",
+      "time": "11:00",
+      "category": "sponsoredEvent",
+      "details": "review",
+      "createdBy": "",
+      "status": ""
+    },
+    {
+      "id": 3,
+      "dateFrom": "2020-10-14",
+      "dateTo": "",
+      "time": "19:59",
+      "category": "sponsored-event",
+      "details": "s",
+      "createdBy": "",
+      "status": ""
+    },
+    {
+      "id": 4,
+      "dateFrom": "2020-10-29",
+      "dateTo": "",
+      "time": "20:05",
+      "category": "sponsored-event",
+      "details": "Pro Game",
+      "createdBy": "",
+      "status": ""
+    },
+    {
+      "id": 5,
+      "dateFrom": "2020-10-07",
+      "dateTo": "2020-11-07",
+      "time": "",
+      "category": "sponsored-event",
+      "details": "NIIICE",
+      "createdBy": "",
+      "status": ""
+    }
+  ],
+  "AppointmentsTable": [
+    {
+      "id": 1,
+      "date": "2020-10-22",
+      "time": "08:30",
+      "patient": "Aldrin Niell Basa",
+      "reason": "Fever"
+    },
+    {
+      "id": 2,
+      "date": "2020-10-15",
+      "time": "16:41",
+      "patient": "asdasd",
+      "reason": "Dry cough and fever"
+    },
+    {
+      "id": 3,
+      "date": "2020-10-08",
+      "time": "09:12",
+      "patient": "Aldrin Niell M. Basa",
+      "reason": "Dry cough and fever"
+    },
+    {
+      "id": 4,
+      "date": "2020-10-16",
+      "time": "16:00",
+      "patient": "Danica Eco",
+      "reason": "Check-Up"
+    }
+  ]
+}

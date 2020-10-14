@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild} from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -15,12 +16,12 @@ export class CalendarComponent implements OnInit {
   calendarPlugins = [dayGridPlugin, interactionPlugin];
   nextDayThreshold = '09:00:00';
   calendarEvents = [{
-    title: 'event1', 
-    start:'2020-10-04T14:30:00',
-    end: '2020-10-04T16:30:00',
+    title: '', 
+    start:'',
+    end: '',
     allday: false,
-    backgroundColor: '#ff0000',
-    borderColor: '#ff0000',
+    backgroundColor: '',
+    borderColor: ''
   }];
 
   oneDayDate;
@@ -36,14 +37,109 @@ export class CalendarComponent implements OnInit {
   parsedDateAndTimeMultiFrom;
   backgroundColor;
 
-  constructor(private data: CalendarServiceService) { }
+  APIUrlCalendarEvents = 'http://localhost:3000/CalendarEventsTable';
+  APIUrlAppointmentsTable = "http://localhost:3000/AppointmentsTable";
+  postData;
 
-  ngOnInit() {    
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() { 
+    this.renderDate();
+  }
+  // renderDate(){
+
+  //   this.calendarEvents = [];
+
+  //   this.http.get(this.APIUrlCalendarEvents).toPromise().then((data:any) => {
+  //     for(let key in data){
+  //       if(data.hasOwnProperty(key)){
+
+  //         this.calendarEvents = this.calendarEvents.concat({ 
+  //           title: data[key].details, 
+  //           start: data[key].dateFrom,
+  //           end: data[key].dateTo,
+  //           allday: false,
+  //           backgroundColor: '#447ba1',
+  //           borderColor: '#447ba1',
+  //         });
+  //       }
+  //     }
+  //   });
+  // }
+
+  renderDate(){
+    this.calendarEvents = [];
+
+    //Personal and Sponsored Events
+    this.http.get(this.APIUrlCalendarEvents).toPromise().then((data:any) => {
+      for(let key in data){
+        if(data.hasOwnProperty(key)){
+
+          if(data[key].dateTo != ''){
+            //Multi-Day Event
+            if(data[key].category == 'personal'){
+              this.backgroundColor = '#ffff00';
+            }else{
+              this.backgroundColor = '#a427c5';
+            }
+    
+            this.calendarEvents = this.calendarEvents.concat({ 
+              title: data[key].details, 
+              start: data[key].dateFrom,
+              end: data[key].dateTo,
+              allday: true,
+              backgroundColor: this.backgroundColor,
+              borderColor: this.backgroundColor
+            });
+          }
+          else{
+            //One-Day Event
+            if(data[key].category == 'personal'){
+              this.backgroundColor = '#ffff00';
+            }else{
+              this.backgroundColor = '#a427c5';
+            }
+            this.parsedDateAndTimeOneDay = data[key].dateFrom + 'T' + data[key].time;
+        
+            this.calendarEvents = this.calendarEvents.concat({ 
+              title: data[key].details, 
+              start: this.parsedDateAndTimeOneDay,
+              end: null,
+              allday: null,
+              backgroundColor: this.backgroundColor,
+              borderColor: this.backgroundColor
+            });
+          }
+        }
+      }
+    });
+
+    this.http.get(this.APIUrlAppointmentsTable).toPromise().then((data:any) => {
+      for(let key in data){
+        if(data.hasOwnProperty(key)){
+
+          this.parsedDateAndTimeOneDay = data[key].date + 'T' + data[key].time;
+        
+          this.calendarEvents = this.calendarEvents.concat({ 
+            title: data[key].patient, 
+            start: this.parsedDateAndTimeOneDay,
+            end: null,
+            allday: null,
+            backgroundColor: '#447ba1',
+            borderColor: '#447ba1',
+          });
+        }
+      }
+    });
   }
 
-    
-  handleDateClick(arg) { // handler method
-    this.addItem.openModal(arg.dateStr);
+  handleDateClick(arg){ // handler method
+    this.addItem.openModal(arg.dateStr);  
+  }
+
+  handleEventClick(arg){
+    alert(arg.event.title);
   }
 
   @ViewChild('addItem') addItem; 
@@ -75,6 +171,18 @@ export class CalendarComponent implements OnInit {
           backgroundColor: '#447ba1',
           borderColor: '#447ba1',
         });
+
+        this.postData = {
+          id: '',
+          date: this.oneDayDate,
+          time: this.oneDayTime,
+          patient: this.patient,
+          reason: this.reason
+        }
+
+        this.http.post(this.APIUrlAppointmentsTable, this.postData).toPromise().then((data:any) => {
+          console.log(data);
+        });
       }
 
       else{
@@ -95,6 +203,21 @@ export class CalendarComponent implements OnInit {
           backgroundColor: this.backgroundColor,
           borderColor: this.backgroundColor
         });
+
+        this.postData = {
+          id: '',
+          dateFrom: this.oneDayDate,
+          dateTo: '',
+          time: this.oneDayTime,
+          category: this.category,
+          details: this.details, 
+          createdBy: '',
+          status: ''
+        };
+
+        this.http.post(this.APIUrlCalendarEvents, this.postData).toPromise().then((data:any) => {
+          console.log(data);
+        });        
       }
     }
 
@@ -130,6 +253,21 @@ export class CalendarComponent implements OnInit {
           backgroundColor: this.backgroundColor,
           borderColor: this.backgroundColor
         });
+
+        this.postData = {
+          id: '',
+          dateFrom: this.multiDayFromDate,
+          dateTo: this.multiDayToDate,
+          time: '',
+          category: this.category,
+          details: this.details, 
+          createdBy: '',
+          status: ''
+        };
+
+        this.http.post(this.APIUrlCalendarEvents, this.postData).toPromise().then((data:any) => {
+          console.log(data);
+        });
       }
     }
 
@@ -142,6 +280,10 @@ export class CalendarComponent implements OnInit {
     this.patient = '';
     this.reason = '';
     this.parsedDateAndTimeOneDay = '';
+
+    this.postData = '';
+
+    this.renderDate();
   }
 
 }
