@@ -196,6 +196,7 @@ export class CalendarComponent implements OnInit {
       }
 
       this.viewItem.getValues(parsedDateFrom, parsedDateTo, parsedTime);
+      this.viewItem.openModal();
   }
 
   @ViewChild('addItem') addItem; 

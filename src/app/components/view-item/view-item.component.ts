@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { viewAttached } from '@angular/core/src/render3/instructions';
-import { defaultMaxListeners } from 'stream';
 
 
 @Component({
@@ -28,9 +26,19 @@ export class ViewItemComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  @ViewChild('viewItemModal') viewItemModal;
+
   ngOnInit() {
-    
   }
+
+  closeModal(){
+    this.viewItemModal.nativeElement.className = 'modal hide'
+  }
+
+  openModal(){
+    this.viewItemModal.nativeElement.className = 'modal fade show';
+  }
+
   AssignValues(date, time, category, patient, reason, details){
     date.value = this.dateFrom;
     time.value = this.time;
@@ -49,18 +57,18 @@ export class ViewItemComponent implements OnInit {
     }
   }
 
-  @ViewChild('date') dateElement;
-  @ViewChild('time') timeElement;
-  @ViewChild('category') categoryElement;
-  @ViewChild('details') detailsElement;
-  @ViewChild('patient') patientElement;
-  @ViewChild('reason') reasonElement;
+  
 
   getValues(dateFrom, dateTo, time){
 
     if(time != ''){
-      let params = new HttpParams().set('dateFrom', dateFrom);
-      params.append('time', time);
+
+      let filterCalendarTable = {
+        dateFrom: dateFrom,
+        time: time
+      }
+
+      let params = new HttpParams({fromObject: filterCalendarTable})
   
       this.http.get(this.APIUrlCalendarEvents, {params}).toPromise().then((data:any) => {
         for(let key in data){
@@ -73,8 +81,13 @@ export class ViewItemComponent implements OnInit {
         }
       });
 
-      let paramsAppointment = new HttpParams().set('date', dateFrom);
-      paramsAppointment.append('time', time);
+
+      let filterAppointmentTable = {
+        date: dateFrom,
+        time: time
+      }
+      let paramsAppointment = new HttpParams({fromObject: filterAppointmentTable});
+
 
       this.http.get(this.APIUrlAppointmentsTable, {params: paramsAppointment}).toPromise().then((data:any) => {
         for(let key in data){
@@ -90,8 +103,12 @@ export class ViewItemComponent implements OnInit {
     }
 
     else{
-      let params = new HttpParams().set('dateFrom', dateFrom);
-      params.append('dateTo', dateTo);
+      let filterCalendarTable = {
+        dateFrom: dateFrom,
+        dateTo: dateTo
+      }
+
+      let params = new HttpParams({fromObject: filterCalendarTable});
 
       this.http.get(this.APIUrlCalendarEvents, {params}).toPromise().then((data:any) => {
         for(let key in data){
@@ -103,13 +120,52 @@ export class ViewItemComponent implements OnInit {
           console.log(data[key].details);
         }
       });
+
+      
+    }
+  }
+
+  delete(time, date){
+    console.log(time.value);
+    console.log(date.value);
+
+    var idToDelete;
+
+    let filter = {
+      dateFrom: date.value,
+      time: time.value
     }
 
-    // this.dateElement.nativeElement.value = this.dateFrom;
-    // this.timeElement.nativeElement.value = this.time;
-    // this.categoryElement.nativeElement.value = this.category;
-    // this.detailsElement.nativeElement.value = this.details;
-    // this.patientElement.nativeElement.value = this.patient;
-    // this.reasonElement.nativeElement.value = this.reason;
+    let params = new HttpParams({fromObject: filter});
+
+    this.http.get(this.APIUrlCalendarEvents, {params}).toPromise().then((data:any) => {
+      
+      idToDelete = data[0].id;
+      console.log('with data');
+
+      this.http.delete(this.APIUrlCalendarEvents + '/' + idToDelete.toString()).toPromise().then((data:any) => {});
+
+      window.location.reload();
+    });
+
+    let filterAppointmentTable = {
+      date: date.value,
+      time: time.value
+    }
+
+    let paramsAppointment = new HttpParams({fromObject: filterAppointmentTable});
+
+    this.http.get(this.APIUrlAppointmentsTable, {params: paramsAppointment}).toPromise().then((data:any) => {
+      
+      idToDelete = data[0].id;
+      console.log('with data');
+
+      this.http.delete(this.APIUrlAppointmentsTable + '/' + idToDelete.toString()).toPromise().then((data:any) => {});
+
+      window.location.reload();
+    });
+
+    
+
   }
 }
