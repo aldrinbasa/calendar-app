@@ -13,32 +13,63 @@
       </div>
 
       <div class="modal-body">
-        <div>
-          <label for="date">Date</label>
-          <input #date type="date" id="date" readonly>
-      
-          <br>
-      
-          <label for="time">Time</label>
-          <input #time type="time" id="time" readonly>
-      
-          <br>
-      
-          <label for="category">Category</label>
-          <input #category type="text" id="category" readonly>
-        </div>
-        <div [hidden]="hiddenAppointment">
-          <label for="details">Details</label>
-          <input #details type="text" id="details" readonly>
-        </div>
-      
-        <div [hidden]="hiddenOthers">
-          <label for="patient">Patient</label>
-          <input #patient type="text" id="patient" readonly>
-          <br>
-          <label for="reason">Reason</label>
-          <input #reason type="text" id="reason" readonly>
-        </div>
+        <table>
+          <div>
+            <tr>
+              <td>
+                <label for="date">Date</label>
+              </td>
+              <td>
+                <input #date type="date" id="date" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="time">Time</label>
+              </td>
+              <td>
+                <input #time type="time" id="time" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="category">Category</label>
+              </td>
+              <td>
+                <input #category type="text" id="category" readonly>
+              </td>
+            </tr>
+          </div>
+          <div [hidden]="hiddenAppointment">
+            <tr>
+              <td>
+                <label for="details">Details</label>
+              </td>
+              <td>
+                <input #details type="text" id="details" readonly>
+                </td>
+            </tr>
+          </div>
+        
+          <div [hidden]="hiddenOthers">
+            <tr>
+              <td>
+                <label for="patient">Patient</label>
+              </td>
+              <td>
+                <input #patient type="text" id="patient" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="reason">Reason</label>
+              </td>
+              <td>
+                <input #reason type="text" id="reason" readonly>
+              </td>
+            </tr>
+          </div>
+        </table>
         
       </div>
 

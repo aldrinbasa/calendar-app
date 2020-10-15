@@ -12,70 +12,126 @@
       </div>
       
       <div class="modal-body">
+        <table>
+          <tr>
+            <td>
+              <input (click)="getModeOfForm(radioOneDay)" #radioOneDay type="radio" id="one-day" name="add-item-mode" value="one-day" checked="true">
+              <label for="one-day">One-Day</label>
+            </td>
+            <td>
+              <input (click)="getModeOfForm(radioMultiDay)" #radioMultiDay type="radio" id="multi-day" name="add-item-mode" value="multi-day">
+              <label for="multi-day">Multi-Day</label>
+            </td>
+          </tr>
 
-        <input (click)="getModeOfForm(radioOneDay)" #radioOneDay type="radio" id="one-day" name="add-item-mode" value="one-day" checked="true">
-        <label for="one-day">One-Day</label>
+          
+          <!-- <div [hidden] = "hiddenOneDay"> -->
+            <tr>
+              <td>
+                <label for="date" [hidden] = "hiddenOneDay">Date</label>
+              </td>
+              <td>
+                <input #date type="date" id="date" [hidden] = "hiddenOneDay">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="time" [hidden] = "hiddenOneDay">Time</label>
+              </td>
+              <td>
+                <input #time type="time" id="time" [hidden] = "hiddenOneDay">
+              </td>
+            </tr>
+          <!-- </div> -->
 
-        <input (click)="getModeOfForm(radioMultiDay)" #radioMultiDay type="radio" id="multi-day" name="add-item-mode" value="multi-day">
-        <label for="multi-day">Multi-Day</label>
+          <!-- <div [hidden]="hiddenMultiDay"> -->
+            <tr>
+              <td>
+                <label for="dateFrom" [hidden]="hiddenMultiDay">From</label>
+              </td>
+              <td>
+                <input #from type="date" id="dateFrom" [hidden]="hiddenMultiDay">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="dateTo" [hidden]="hiddenMultiDay">To</label>
+              </td>
+              <td>
+                <input #to type="date" id="dateTo" [hidden]="hiddenMultiDay">
+              </td>
+            </tr>
+          <!-- </div> -->
 
-        <br>
+          <tr>
+            <td>
+              <label for="category">Category</label>
+            </td>
+            <td>
+              <select (click)="getCategoryOfForm(category)" #category name="category" id="category">
+                <option disabled selected value>-- select a category --</option>
+                <option #appointment [hidden]="hiddenAppointmentMultiDay" value="appointment">Appointment</option>
+                <option value="personal">Personal</option>
+                <option value="sponsored-event">Sponsored Event</option>
+              </select>
+            </td>
+          </tr>
 
+          <!-- <div [hidden]="hiddenAppointment"> -->
+            <tr>
+              <td>
+                <label for="details" [hidden]="hiddenAppointment">Details</label>
+              </td>
+              <td>
+                <input #details type="text" id="details" [hidden]="hiddenAppointment">
+              </td>
+            </tr>
+          <!-- </div> -->
 
-        <div [hidden] = "hiddenOneDay">
-            <label for="date">Date</label>
-            <input #date type="date" id="date">
-            <br>
-            <label for="time">Time</label>
-            <input #time type="time" id="time">
-        </div>
+          <!-- <div [hidden]="hiddenOthers"> -->
+            <tr>
+              <td>
+                <label for="patient" [hidden]="hiddenOthers">Patient</label>
+              </td>
+              <td>
+                <input #patient type="text" id="patient" [hidden]="hiddenOthers">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="reason" [hidden]="hiddenOthers">Reason</label>
+              </td>
+              <td>
+                <input #reason type="text" id="reason" [hidden]="hiddenOthers">
+              </td>
+            </tr>
+          <!-- </div> -->
 
-        <div [hidden]="hiddenMultiDay">
-            <label for="dateFrom">From</label>
-            <input #from type="date" id="dateFrom">
-            <br>
-            <label for="dateTo">To</label>
-            <input #to type="date" id="dateTo">
-        </div>
+          
 
-        <br>
-
-        <label for="category">Category</label>
-        <select (click)="getCategoryOfForm(category)" #category name="category" id="category">
-          <option disabled selected value>-- select a category --</option>
-          <option #appointment [hidden]="hiddenAppointmentMultiDay" value="appointment">Appointment</option>
-          <option value="personal">Personal</option>
-          <option value="sponsored-event">Sponsored Event</option>
-        </select>
-
-        <div [hidden]="hiddenAppointment">
-          <label for="details">Details</label>
-          <input #details type="text" id="details">
-        </div>
-
-        <div [hidden]="hiddenOthers">
-          <label for="patient">Patient</label>
-          <input #patient type="text" id="patient">
-          <br>
-          <label for="reason">Reason</label>
-          <input #reason type="text" id="reason">
-        </div>
-
-        <br>
+        </table>  
       </div>
 
       <div class="modal-footer">
-        <button id="cancelButton" (click)="closeModal()">Cancel</button>
-        <button id="saveButton" (click)="getFormValues(
-          date, 
-          time, 
-          category,
-          from,
-          to,
-          patient,
-          reason,
-          details
-          )">Save</button>
+        <table>
+          <tr>
+            <td>
+              <button id="cancelButton" (click)="closeModal()">Cancel</button>
+            </td>
+            <td>
+              <button id="saveButton" (click)="getFormValues(
+                date, 
+                time, 
+                category,
+                from,
+                to,
+                patient,
+                reason,
+                details
+                )">Save</button>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>

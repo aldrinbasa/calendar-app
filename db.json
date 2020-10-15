@@ -1,4 +1,15 @@
 {
-  "CalendarEventsTable": [],
+  "CalendarEventsTable": [
+    {
+      "id": 1,
+      "dateFrom": "2020-10-16",
+      "dateTo": "",
+      "time": "",
+      "category": "",
+      "details": "",
+      "createdBy": "",
+      "status": ""
+    }
+  ],
   "AppointmentsTable": []
 }

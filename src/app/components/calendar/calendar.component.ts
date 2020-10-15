@@ -342,6 +342,7 @@ export class CalendarComponent implements OnInit {
     this.postData = '';
 
     this.renderDate();
+    window.location.reload();
   }
 
 }
