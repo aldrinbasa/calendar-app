@@ -133,6 +133,8 @@ export class CalendarComponent implements OnInit {
         }
       }
     });
+
+
   }
 
   handleDateClick(arg){ // handler method
@@ -342,7 +344,6 @@ export class CalendarComponent implements OnInit {
     this.postData = '';
 
     this.renderDate();
-    window.location.reload();
   }
 
 }

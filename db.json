@@ -9,6 +9,26 @@
       "details": "",
       "createdBy": "",
       "status": ""
+    },
+    {
+      "id": 2,
+      "dateFrom": "2020-10-13",
+      "dateTo": "",
+      "time": "",
+      "category": "personal",
+      "details": "Eat Shawarma",
+      "createdBy": "",
+      "status": ""
+    },
+    {
+      "id": 3,
+      "dateFrom": "2020-10-15",
+      "dateTo": "",
+      "time": "",
+      "category": "",
+      "details": "",
+      "createdBy": "",
+      "status": ""
     }
   ],
   "AppointmentsTable": []
