@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild} from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { parse } from 'querystring';
 import { CalendarServiceService } from '../../calendar-service.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class CalendarComponent implements OnInit {
   public defaultDateFromParent;
 
   calendarPlugins = [dayGridPlugin, interactionPlugin];
-  nextDayThreshold = '09:00:00';
+  nextDayThreshold = '00:00:00';
   calendarEvents = [{
     title: '', 
     start:'',
@@ -139,10 +140,66 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(arg){
-    alert(arg.event.title);
+    var yearFrom, monthFrom, dateFrom;
+    var yearTo, monthTo, dateTo;
+    var hour, minute;
+    var parsedDateTo = '';
+    var parsedDateFrom = '';
+    var parsedTime = '';
+
+    yearFrom = arg.event.start.getFullYear().toString();
+    monthFrom = (arg.event.start.getMonth() + 1).toString();
+    dateFrom = arg.event.start.getDate().toString();
+
+    if((arg.event.start.getMonth() + 1) < 10){
+      monthFrom = '0' + monthFrom;
+    }
+
+    if(arg.event.start.getDate() < 10){
+      dateFrom = '0' + dateFrom;
+    }
+
+    parsedDateFrom = yearFrom + '-' + monthFrom + '-' + dateFrom;
+
+    if(arg.event.end != null){
+
+      yearTo = arg.event.end.getFullYear().toString();
+      monthTo = (arg.event.end.getMonth() + 1).toString();
+      dateTo = arg.event.end.getDate().toString();
+
+      if((arg.event.end.getMonth() + 1) < 10){
+        monthFrom = '0' + monthFrom;
+      }
+  
+      if(arg.event.end.getDate() < 10){
+        dateFrom = '0' + dateFrom;
+      }
+
+      parsedDateTo = yearTo + '-' + monthTo + '-' + dateTo;
+      parsedTime = '';
+    }
+    else{
+      parsedDateTo = '';
+
+      hour = arg.event.start.getHours().toString();
+      minute = arg.event.start.getMinutes().toString();
+      
+      if(arg.event.start.getHours() < 10){
+        hour = '0' + hour;
+      }
+
+      if(arg.event.start.getMinutes() < 10){
+        minute = '0' + minute;
+      }
+
+      parsedTime = hour + ':' + minute;
+      }
+
+      this.viewItem.getValues(parsedDateFrom, parsedDateTo, parsedTime);
   }
 
   @ViewChild('addItem') addItem; 
+  @ViewChild('viewItem') viewItem;
 
   getValuesFromAddNewItem(getValuesFromAddNewItem){
     this.oneDayDate = getValuesFromAddNewItem.oneDayDate;

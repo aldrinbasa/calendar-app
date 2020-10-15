@@ -1,6 +1,4 @@
 import { Component, OnInit , EventEmitter, Output, ViewChild, Input} from '@angular/core';
-import { View } from '@fullcalendar/core';
-import { CalendarServiceService } from '../../calendar-service.service';
 
 
 @Component({
@@ -9,8 +7,6 @@ import { CalendarServiceService } from '../../calendar-service.service';
   styleUrls: ['./add-item.component.css'],
 })
 export class AddItemComponent implements OnInit {
-
-  constructor(private data: CalendarServiceService) { }
 
   @Input() public defaultDate;
 
