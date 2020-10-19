@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild} from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { parse } from 'querystring';
-import { CalendarServiceService } from '../../calendar-service.service';
 
 @Component({
   selector: 'calendar',
@@ -13,17 +11,6 @@ import { CalendarServiceService } from '../../calendar-service.service';
 export class CalendarComponent implements OnInit {
 
   public defaultDateFromParent;
-
-  calendarPlugins = [dayGridPlugin, interactionPlugin];
-  nextDayThreshold = '00:00:00';
-  calendarEvents = [{
-    title: '', 
-    start:'',
-    end: '',
-    allday: false,
-    backgroundColor: '',
-    borderColor: ''
-  }];
 
   oneDayDate;
   oneDayTime;
@@ -38,36 +25,29 @@ export class CalendarComponent implements OnInit {
   parsedDateAndTimeMultiFrom;
   backgroundColor;
 
+  calendarPlugins = [dayGridPlugin, interactionPlugin];
+  nextDayThreshold = '00:00:00';
+  calendarEvents = [{
+    title: '', 
+    start:'',
+    end: '',
+    allday: false,
+    backgroundColor: '',
+    borderColor: ''
+  }];
+
   APIUrlCalendarEvents = 'http://localhost:3000/CalendarEventsTable';
   APIUrlAppointmentsTable = "http://localhost:3000/AppointmentsTable";
   postData;
 
+  @ViewChild('addItem') addItem; 
+  @ViewChild('viewItem') viewItem;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() { 
     this.renderDate();
   }
-  // renderDate(){
-
-  //   this.calendarEvents = [];
-
-  //   this.http.get(this.APIUrlCalendarEvents).toPromise().then((data:any) => {
-  //     for(let key in data){
-  //       if(data.hasOwnProperty(key)){
-
-  //         this.calendarEvents = this.calendarEvents.concat({ 
-  //           title: data[key].details, 
-  //           start: data[key].dateFrom,
-  //           end: data[key].dateTo,
-  //           allday: false,
-  //           backgroundColor: '#447ba1',
-  //           borderColor: '#447ba1',
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
 
   renderDate(){
     this.calendarEvents = [];
@@ -133,8 +113,6 @@ export class CalendarComponent implements OnInit {
         }
       }
     });
-
-
   }
 
   handleDateClick(arg){ // handler method
@@ -200,9 +178,6 @@ export class CalendarComponent implements OnInit {
       this.viewItem.getValues(parsedDateFrom, parsedDateTo, parsedTime);
       this.viewItem.openModal();
   }
-
-  @ViewChild('addItem') addItem; 
-  @ViewChild('viewItem') viewItem;
 
   getValuesFromAddNewItem(getValuesFromAddNewItem){
     this.oneDayDate = getValuesFromAddNewItem.oneDayDate;
@@ -345,5 +320,4 @@ export class CalendarComponent implements OnInit {
 
     this.renderDate();
   }
-
 }

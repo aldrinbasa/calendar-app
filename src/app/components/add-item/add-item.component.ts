@@ -17,8 +17,23 @@ export class AddItemComponent implements OnInit {
   hiddenMultiDay = true;
   hiddenAppointment = true;
   hiddenOthers = true;
+  hiddenAppointmentMultiDay;
 
   @ViewChild('addItemModal') addItemModal;
+  @ViewChild('date') date;
+  @ViewChild('from') from;
+  @ViewChild('radioOneDay') radioOneDay;
+  @ViewChild('radioMultiDay') radioMultiDay;
+  @ViewChild('category') category;
+
+  @Output() getValuesEvent = new EventEmitter();
+  @Output() saveToCalendar = new EventEmitter();
+
+  ngOnInit() {
+    this.oneDayMode = true;
+    this.categoryMode = "";
+  }
+
   closeModal(){
     this.addItemModal.nativeElement.className = 'modal hide';
 
@@ -32,26 +47,13 @@ export class AddItemComponent implements OnInit {
     this.hiddenOthers = true;
   }
 
-  @ViewChild('date') date;
-  @ViewChild('from') from;
-  @ViewChild('radioOneDay') radioOneDay;
-  @ViewChild('radioMultiDay') radioMultiDay;
-  @ViewChild('category') category;
-
-
   openModal(Date){
     this.addItemModal.nativeElement.className = 'modal fade show';
     this.date.nativeElement.value = Date;
     this.from.nativeElement.value = Date;
   }
 
-  ngOnInit() {
-    this.oneDayMode = true;
-    this.categoryMode = "";
-  }
-
   getFormValues(date, time, category, from, to, patient, reason, details){
-
     this.AddItemValues.oneDayDate = date.value;
     this.AddItemValues.oneDayTime = time.value;
     this.AddItemValues.category = category.value;
@@ -75,10 +77,7 @@ export class AddItemComponent implements OnInit {
     this.closeModal();
   }
 
-  hiddenAppointmentMultiDay;
-
   getModeOfForm(item){
-    
     this.category.nativeElement.selectedIndex = 0;
     this.hiddenAppointment = true;
     this.hiddenOthers = true;
@@ -109,11 +108,6 @@ export class AddItemComponent implements OnInit {
       this.hiddenOthers = true;
     }
   }
-
-
-
-  @Output() getValuesEvent = new EventEmitter();
-  @Output() saveToCalendar = new EventEmitter();
 
   AddItemValues = {
     oneDayDate: '',

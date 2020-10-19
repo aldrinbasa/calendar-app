@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
-
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 
 @Component({
   selector: 'view-item',
   templateUrl: './view-item.component.html',
   styleUrls: ['./view-item.component.css']
 })
-export class ViewItemComponent implements OnInit {
 
+export class ViewItemComponent implements OnInit {
   dateFrom = '';
   dateTo = '';
   time = '';
@@ -57,12 +55,9 @@ export class ViewItemComponent implements OnInit {
     }
   }
 
-  
-
   getValues(dateFrom, dateTo, time){
 
     if(time != ''){
-
       let filterCalendarTable = {
         dateFrom: dateFrom,
         time: time
@@ -86,8 +81,8 @@ export class ViewItemComponent implements OnInit {
         date: dateFrom,
         time: time
       }
-      let paramsAppointment = new HttpParams({fromObject: filterAppointmentTable});
 
+      let paramsAppointment = new HttpParams({fromObject: filterAppointmentTable});
 
       this.http.get(this.APIUrlAppointmentsTable, {params: paramsAppointment}).toPromise().then((data:any) => {
         for(let key in data){
@@ -98,10 +93,7 @@ export class ViewItemComponent implements OnInit {
           this.category = 'Appointment';
         }
       });
-
-      
     }
-
     else{
       let filterCalendarTable = {
         dateFrom: dateFrom,
@@ -120,8 +112,6 @@ export class ViewItemComponent implements OnInit {
           console.log(data[key].details);
         }
       });
-
-      
     }
   }
 
@@ -164,8 +154,5 @@ export class ViewItemComponent implements OnInit {
 
       window.location.reload();
     });
-
-    
-
   }
 }

@@ -24,8 +24,7 @@
             </td>
           </tr>
 
-          
-          <!-- <div [hidden] = "hiddenOneDay"> -->
+          <!-- Hidden One-Day -->
             <tr>
               <td>
                 <label for="date" [hidden] = "hiddenOneDay">Date</label>
@@ -42,9 +41,8 @@
                 <input #time type="time" id="time" [hidden] = "hiddenOneDay">
               </td>
             </tr>
-          <!-- </div> -->
 
-          <!-- <div [hidden]="hiddenMultiDay"> -->
+          <!-- Hidden Multi Day -->
             <tr>
               <td>
                 <label for="dateFrom" [hidden]="hiddenMultiDay">From</label>
@@ -61,7 +59,6 @@
                 <input #to type="date" id="dateTo" [hidden]="hiddenMultiDay">
               </td>
             </tr>
-          <!-- </div> -->
 
           <tr>
             <td>
@@ -77,7 +74,7 @@
             </td>
           </tr>
 
-          <!-- <div [hidden]="hiddenAppointment"> -->
+          <!-- Hidden Appointment -->
             <tr>
               <td>
                 <label for="details" [hidden]="hiddenAppointment">Details</label>
@@ -86,9 +83,8 @@
                 <input #details type="text" id="details" [hidden]="hiddenAppointment">
               </td>
             </tr>
-          <!-- </div> -->
 
-          <!-- <div [hidden]="hiddenOthers"> -->
+          <!-- Hidden Others -->
             <tr>
               <td>
                 <label for="patient" [hidden]="hiddenOthers">Patient</label>
@@ -105,7 +101,6 @@
                 <input #reason type="text" id="reason" [hidden]="hiddenOthers">
               </td>
             </tr>
-          <!-- </div> -->
 
           
 
@@ -136,28 +131,3 @@
     </div>
   </div>
 </div>
-
-
-<!-- <button (click)="showModal=true" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button> -->
-
-<!-- Modal -->
-
-  <!-- <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button (click)="showModal=false" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div> -->
