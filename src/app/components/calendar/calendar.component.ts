@@ -24,6 +24,15 @@ export class CalendarComponent implements OnInit {
   parsedDateAndTimeOneDay;
   parsedDateAndTimeMultiFrom;
   backgroundColor;
+  orderSetting = 'start,-duration,allDay,title';
+  timeFormat = {
+    hour: 'numeric',
+    minute: '2-digit',
+    meridiem: 'short'
+  }
+  labelFormat = {
+    weekday: 'short'
+  }
 
   calendarPlugins = [dayGridPlugin, interactionPlugin];
   nextDayThreshold = '00:00:00';
@@ -69,7 +78,7 @@ export class CalendarComponent implements OnInit {
               title: data[key].details, 
               start: data[key].dateFrom,
               end: data[key].dateTo,
-              allday: true,
+              allday: false,
               backgroundColor: this.backgroundColor,
               borderColor: this.backgroundColor
             });
@@ -265,7 +274,7 @@ export class CalendarComponent implements OnInit {
           title: this.patient, 
           start: this.multiDayFromDate + 'T00:00:00',
           end: this.multiDayToDate + 'T00:00:00',
-          allday: true,
+          allday: false,
           backgroundColor: '#447ba1',
           borderColor: '#447ba1'
         });
@@ -284,7 +293,7 @@ export class CalendarComponent implements OnInit {
           title: this.details, 
           start: this.multiDayFromDate,
           end: this.multiDayToDate,
-          allday: true,
+          allday: false,
           backgroundColor: this.backgroundColor,
           borderColor: this.backgroundColor
         });

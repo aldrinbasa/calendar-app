@@ -4,6 +4,10 @@
     [events]="calendarEvents"
     (dateClick)="handleDateClick($event)"
     (eventClick)="handleEventClick($event)"
+    [eventOrder]="orderSetting"
+    [eventTimeFormat]="timeFormat"
+    [slotLabelFormat]="labelFormat"
+    [eventLimit]="true"
 ></full-calendar>
 
 <br><br>
