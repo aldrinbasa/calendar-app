@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { View } from '@fullcalendar/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'view-item',
@@ -15,44 +17,113 @@ export class ViewItemComponent implements OnInit {
   patient = '';
   reason = '';
   details = '';
+  isReadOnly = true;
 
   hiddenAppointment = true;
   hiddenOthers = true;
 
+  loadOnce = false;
+
+  editButtonText = "Edit";
+
   APIUrlCalendarEvents = 'http://localhost:3000/CalendarEventsTable';
   APIUrlAppointmentsTable = "http://localhost:3000/AppointmentsTable";
+
+  dateToEdit;
+  timeToEdit;
 
   constructor(private http: HttpClient) { }
 
   @ViewChild('viewItemModal') viewItemModal;
+  @ViewChild('date') dateElement;
+  @ViewChild('time') timeElement;
+  @ViewChild('category') categoryElement;
+  @ViewChild('patient') patientElement;
+  @ViewChild('reason') reasonElement;
+  @ViewChild('details') detailsElement;
+  @ViewChild('editButton') editButtonElement;
 
   ngOnInit() {
   }
 
   closeModal(){
     this.viewItemModal.nativeElement.className = 'modal hide'
+    this.loadOnce = false;
+    this.editButtonText = 'Edit';
   }
 
   openModal(){
     this.viewItemModal.nativeElement.className = 'modal fade show';
   }
 
-  AssignValues(date, time, category, patient, reason, details){
-    date.value = this.dateFrom;
-    time.value = this.time;
-    category.value = this.category;
-    patient.value = this.patient;
-    reason.value = this.reason;
-    details.value = this.details;
+  editPersonalEvent(){
 
-    if(this.category == "Appointment"){
-      this.hiddenAppointment = true;
-      this.hiddenOthers = false;
+    
+
+    
+
+    if(this.editButtonText == 'Edit'){
+
+      if(this.categoryElement.nativeElement.value == 'personal'){
+        this.editButtonText = 'Save'
+        this.isReadOnly = false;
+
+        this.dateToEdit = this.dateElement.nativeElement.value;
+        this.timeToEdit = this.timeElement.nativeElement.value;
+
+      }
+      else{
+        alert("Not Editable");
+      }
     }
-    else{
-      this.hiddenAppointment = false;
-      this.hiddenOthers = true;
+    else if(this.editButtonText == 'Save'){
+      this.editButtonText = 'Edit';
+      this.isReadOnly = true;
+
+      var idToDelete;
+
+      let filter = {
+        dateFrom: this.dateToEdit,
+        time: this.timeToEdit
+      }
+      
+      let params = new HttpParams({fromObject: filter});
+
+      this.http.get(this.APIUrlCalendarEvents, {params}).toPromise().then((data:any) => {
+        
+        idToDelete = data[0].id;
+
+        this.http.patch(this.APIUrlCalendarEvents + '/' + idToDelete.toString(), {
+          "time": this.timeElement.nativeElement.value, 
+          "dateFrom": this.dateElement.nativeElement.value,
+          "details": this.detailsElement.nativeElement.value
+        }).toPromise().then((data:any) => {});
+
+        window.location.reload();
+      });
     }
+  }
+
+  AssignValues(date, time, category, patient, reason, details){
+    if(!this.loadOnce){
+      date.value = this.dateFrom;
+      time.value = this.time;
+      category.value = this.category;
+      patient.value = this.patient;
+      reason.value = this.reason;
+      details.value = this.details;
+
+      if(this.category == "Appointment"){
+        this.hiddenAppointment = true;
+        this.hiddenOthers = false;
+      }
+      else{
+        this.hiddenAppointment = false;
+        this.hiddenOthers = true;
+      }
+      this.loadOnce = true;
+    }
+    
   }
 
   getValues(dateFrom, dateTo, time){
@@ -63,7 +134,7 @@ export class ViewItemComponent implements OnInit {
         time: time
       }
 
-      let params = new HttpParams({fromObject: filterCalendarTable})
+      let params = new HttpParams({fromObject: filterCalendarTable});
   
       this.http.get(this.APIUrlCalendarEvents, {params}).toPromise().then((data:any) => {
         for(let key in data){
@@ -71,8 +142,6 @@ export class ViewItemComponent implements OnInit {
           this.time = data[key].time;
           this.category = data[key].category;
           this.details = data[key].details;
-
-          console.log(data[key].details);
         }
       });
 
@@ -109,50 +178,44 @@ export class ViewItemComponent implements OnInit {
           this.category = data[key].category;
           this.details = data[key].details;
 
-          console.log(data[key].details);
         }
       });
     }
   }
 
   delete(time, date){
-    console.log(time.value);
-    console.log(date.value);
+      var idToDelete;
 
-    var idToDelete;
+      let filter = {
+        dateFrom: date.value,
+        time: time.value
+      }
 
-    let filter = {
-      dateFrom: date.value,
-      time: time.value
+      let params = new HttpParams({fromObject: filter});
+
+      this.http.get(this.APIUrlCalendarEvents, {params}).toPromise().then((data:any) => {
+        
+        idToDelete = data[0].id;
+
+        this.http.delete(this.APIUrlCalendarEvents + '/' + idToDelete.toString()).toPromise().then((data:any) => {});
+
+        window.location.reload();
+      });
+
+      let filterAppointmentTable = {
+        date: date.value,
+        time: time.value
+      }
+
+      let paramsAppointment = new HttpParams({fromObject: filterAppointmentTable});
+
+      this.http.get(this.APIUrlAppointmentsTable, {params: paramsAppointment}).toPromise().then((data:any) => {
+        
+        idToDelete = data[0].id;
+
+        this.http.delete(this.APIUrlAppointmentsTable + '/' + idToDelete.toString()).toPromise().then((data:any) => {});
+
+        window.location.reload();
+      });
     }
-
-    let params = new HttpParams({fromObject: filter});
-
-    this.http.get(this.APIUrlCalendarEvents, {params}).toPromise().then((data:any) => {
-      
-      idToDelete = data[0].id;
-      console.log('with data');
-
-      this.http.delete(this.APIUrlCalendarEvents + '/' + idToDelete.toString()).toPromise().then((data:any) => {});
-
-      window.location.reload();
-    });
-
-    let filterAppointmentTable = {
-      date: date.value,
-      time: time.value
-    }
-
-    let paramsAppointment = new HttpParams({fromObject: filterAppointmentTable});
-
-    this.http.get(this.APIUrlAppointmentsTable, {params: paramsAppointment}).toPromise().then((data:any) => {
-      
-      idToDelete = data[0].id;
-      console.log('with data');
-
-      this.http.delete(this.APIUrlAppointmentsTable + '/' + idToDelete.toString()).toPromise().then((data:any) => {});
-
-      window.location.reload();
-    });
-  }
 }

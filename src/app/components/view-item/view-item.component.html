@@ -20,7 +20,7 @@
                 <label for="date">Date</label>
               </td>
               <td>
-                <input #date type="date" id="date" readonly>
+                <input #date type="date" id="date" [readonly] = "isReadOnly">
               </td>
             </tr>
             <tr>
@@ -28,7 +28,7 @@
                 <label for="time">Time</label>
               </td>
               <td>
-                <input #time type="time" id="time" readonly>
+                <input #time type="time" id="time" [readonly] = "isReadOnly">
               </td>
             </tr>
             <tr>
@@ -46,7 +46,7 @@
                 <label for="details">Details</label>
               </td>
               <td>
-                <input #details type="text" id="details" readonly>
+                <input #details type="text" id="details" [readonly] = "isReadOnly">
                 </td>
             </tr>
           </div>
@@ -74,6 +74,9 @@
       </div>
 
       <div class="modal-footer">
+        <div>
+          <button #editButton (click)="editPersonalEvent()">{{editButtonText}}</button>
+        </div>
         <div>
           <button (click)="delete(time, date)">Cancel Event</button>
         </div>
