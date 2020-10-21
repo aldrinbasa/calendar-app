@@ -16,7 +16,7 @@
       "dateTo": "",
       "time": "21:48",
       "category": "personal",
-      "details": "eatfoodssss",
+      "details": "eatfood",
       "createdBy": "",
       "status": ""
     },
@@ -49,6 +49,17 @@
       "details": "Eat Shawarma",
       "createdBy": "",
       "status": ""
+    },
+    {
+      "id": 8,
+      "dateFrom": "2020-10-07",
+      "dateTo": "",
+      "time": "16:04",
+      "category": "personal",
+      "details": "Yoga",
+      "createdBy": "",
+      "status": "",
+      "timeTo": "17:05"
     }
   ],
   "AppointmentsTable": [
@@ -72,6 +83,14 @@
       "time": "09:00",
       "patient": "Glenn",
       "reason": "STD Results"
+    },
+    {
+      "id": 5,
+      "date": "2020-10-07",
+      "time": "16:05",
+      "patient": "Louie",
+      "reason": "Eye check-up",
+      "timeTo": "17:05"
     }
   ]
 }

@@ -53,7 +53,7 @@ export class AddItemComponent implements OnInit {
     this.from.nativeElement.value = Date;
   }
 
-  getFormValues(date, time, category, from, to, patient, reason, details){
+  getFormValues(date, time, category, from, to, patient, reason, details, timeTo){
     this.AddItemValues.oneDayDate = date.value;
     this.AddItemValues.oneDayTime = time.value;
     this.AddItemValues.category = category.value;
@@ -62,6 +62,7 @@ export class AddItemComponent implements OnInit {
     this.AddItemValues.patient = patient.value;
     this.AddItemValues.reason = reason.value;
     this.AddItemValues.details = details.value;
+    this.AddItemValues.timeTo = timeTo.value;
 
     this.passValuesToCalendar();
 
@@ -73,6 +74,7 @@ export class AddItemComponent implements OnInit {
     patient.value = '';
     reason.value = '';
     details.value = '';
+    timeTo.value = '';
 
     this.closeModal();
   }
@@ -118,6 +120,7 @@ export class AddItemComponent implements OnInit {
     details: '',
     patient: '',
     reason: '',
+    timeTo: ''
   }
 
   passValuesToCalendar(){

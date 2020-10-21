@@ -20,6 +20,7 @@ export class CalendarComponent implements OnInit {
   details;
   patient;
   reason;
+  timeTo;
 
   parsedDateAndTimeOneDay;
   parsedDateAndTimeMultiFrom;
@@ -197,6 +198,7 @@ export class CalendarComponent implements OnInit {
     this.details = getValuesFromAddNewItem.details;
     this.patient = getValuesFromAddNewItem.patient;
     this.reason = getValuesFromAddNewItem.reason;
+    this.timeTo = getValuesFromAddNewItem.timeTo;
   }
 
   addEvent(){
@@ -221,7 +223,8 @@ export class CalendarComponent implements OnInit {
           date: this.oneDayDate,
           time: this.oneDayTime,
           patient: this.patient,
-          reason: this.reason
+          reason: this.reason,
+          timeTo: this.timeTo
         }
 
         this.http.post(this.APIUrlAppointmentsTable, this.postData).toPromise().then((data:any) => {
@@ -256,7 +259,8 @@ export class CalendarComponent implements OnInit {
           category: this.category,
           details: this.details, 
           createdBy: '',
-          status: ''
+          status: '',
+          timeTo: this.timeTo
         };
 
         this.http.post(this.APIUrlCalendarEvents, this.postData).toPromise().then((data:any) => {
@@ -324,6 +328,7 @@ export class CalendarComponent implements OnInit {
     this.patient = '';
     this.reason = '';
     this.parsedDateAndTimeOneDay = '';
+    this.timeTo = '';
 
     this.postData = '';
 

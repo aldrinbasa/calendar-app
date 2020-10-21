@@ -35,10 +35,18 @@
             </tr>
             <tr>
               <td>
-                <label for="time" [hidden] = "hiddenOneDay">Time</label>
+                <label for="time" [hidden] = "hiddenOneDay">Time From</label>
               </td>
               <td>
                 <input #time type="time" id="time" [hidden] = "hiddenOneDay">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="timeTo" [hidden] = "hiddenOneDay">Time To</label>
+              </td>
+              <td>
+                <input #timeTo type="time" id="timeTo" [hidden] = "hiddenOneDay">
               </td>
             </tr>
 
@@ -122,7 +130,8 @@
                 to,
                 patient,
                 reason,
-                details
+                details,
+                timeTo
                 )">Save</button>
             </td>
           </tr>
